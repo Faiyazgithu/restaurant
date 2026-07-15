@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Savory Bistro</title>
+    <style>
+        /* --- Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #fcfbfa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            background-color: #1a1a1a;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #ff9f43;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ff9f43;
+        }
+
+        /* Hamburger Menu (Mobile Only) */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 1rem;
+            margin-top: 60px; /* Offset for fixed nav */
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background-color: #ff9f43;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #ee8f2e;
+        }
+
+        /* --- Main Menu Section --- */
+        .menu-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .menu-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-section h2::after {
+            content: '';
+            width: 50%;
+            height: 3px;
+            background-color: #ff9f43;
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-info {
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .menu-title-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .menu-price {
+            color: #ff9f43;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .menu-desc {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* --- Reservation Section --- */
+        .reservation-section {
+            background-color: #f0ede9;
+            padding: 4rem 2rem;
+        }
+
+        .res-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .res-container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .res-container .btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* --- Footer Section --- */
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: #ff9f43;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 1.5rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* --- Mobile Responsive Rules --- */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 60px;
+                left: -100%;
+                flex-direction: column;
+                background-color: #1a1a1a;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+                padding: 1.5rem 0;
+                gap: 1.5rem;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .res-container {
+                padding: 1.5rem;
+            }
+            
+            .footer-content {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">The Savory Bistro</a>
+            <button class="hamburger" id="hamburger-btn">☰</button>
+            <ul class="nav-links" id="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#book-table">Book a Table</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Experience Exquisite Dining</h1>
+        <p>Fresh ingredients, crafted by passionate chefs.</p>
+        <a href="#book-table" class="btn">Book a Table</a>
+    </section>
+
+    <section class="menu-section" id="menu">
+        <h2>Our Main Menu</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80" alt="Salmon Salad" class="menu-img">
+                <div class="menu-info">
+                    <div class="menu-title-price">
+                        <span class="menu-title">Grilled Salmon Bowl</span>
+                        <span class="menu-price">$24</span>
+                    </div>
+                    <p class="menu-desc">Fresh Atlantic salmon served over wild rice, avocado slices, and honey-mustard greens.</p>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=400&q=80" alt="Pizza" class="menu-img">
+                <div class="menu-info">
+                    <div class="menu-title-price">
+                        <span class="menu-title">Artisan Margherita Pizza</span>
+                        <span class="menu-price">$18</span>
+                    </div>
+                    <p class="menu-desc">House-made sourdough crust, fresh mozzarella cheese, organic san marzano tomatoes, and basil leaves.</p>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80" alt="Ribs" class="menu-img">
+                <div class="menu-info">
+                    <div class="menu-title-price">
+                        <span class="menu-title">Smoked BBQ Ribs</span>
+                        <span class="menu-price">$29</span>
+                    </div>
+                    <p class="menu-desc">Slow-cooked prime beef ribs glazed in signature hickory BBQ sauce, served with crispy fries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reservation-section" id="book-table">
+        <div class="res-container">
+            <h2>Reserve a Table</h2>
+            <form id="reservation-form">
+                <div class="form-group">
+                    <label for="res-name">Full Name</label>
+                    <input type="text" id="res-name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="res-phone">Phone Number</label>
+                    <input type="tel" id="res-phone" placeholder="(123) 456-7890" required>
+                </div>
+                <div class="form-group">
+                    <label for="res-guests">Number of Guests</label>
+                    <select id="res-guests" required>
+                        <option value="1">1 Person</option>
+                        <option value="2" selected>2 People</option>
+                        <option value="4">4 People</option>
+                        <option value="6">6+ People</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="res-date">Date</label>
+                    <input type="date" id="res-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="res-time">Time Slot</label>
+                    <select id="res-time" required>
+                        <option value="5:00 PM">5:00 PM</option>
+                        <option value="6:30 PM">6:30 PM</option>
+                        <option value="8:00 PM">8:00 PM</option>
+                        <option value="9:30 PM">9:30 PM</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Confirm Reservation</button>
+            </form>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>The Savory Bistro</h3>
+                <p>Bringing premium, unforgettable dining experiences straight to your table.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <p>Mon - Fri: 4:00 PM - 11:00 PM</p>
+                <p>Sat - Sun: 11:00 AM - 11:00 PM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>📍 123 Culinary Ave, Foodie City</p>
+                <p>📞 +1 (555) 019-2834</p>
+                <p>✉️ info@savorybistro.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 The Savory Bistro. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile navigation menu
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburgerBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            // Change hamburger character from ☰ to ✕ when open
+            hamburgerBtn.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close mobile menu automatically when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                hamburgerBtn.textContent = '☰';
+            });
+        });
+
+        // Handle reservation submission
+        const resForm = document.getElementById('reservation-form');
+        resForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Stop page refresh
+            
+            // Extract values
+            const name = document.getElementById('res-name').value;
+            const guests = document.getElementById('res-guests').value;
+            const date = document.getElementById('res-date').value;
+            const time = document.getElementById('res-time').value;
+
+            // Simple notification alert (In reality, this would connect to a database API)
+            alert(`Thank you, ${name}! Your table for ${guests} on ${date} at ${time} has been successfully requested.`);
+            
+            resForm.reset();
+        });
+    </script>
+</body>
+</html>
